@@ -1,0 +1,47 @@
+ // ye wala method tabulization se achha hai....
+    // int solveDP(vector<int>&nums, vector<int> &dp, int x){
+    //     if(x==0)
+    //         return 0;
+    //     if(x<0)
+    //         return INT_MAX;
+    //     if(dp[x]!=-1)
+    //         return dp[x];
+    //     int ans  = INT_MAX;
+    //     for(int i=0; i<nums.size(); i++){
+    //         int mini = solveDP(nums, dp, x-nums[i]);
+    //         if(mini!=INT_MAX)
+    //             ans = min(ans, (1+mini)); 
+    //             // 1 + ans --> 1(current coin ) + mini bring next coin.
+    //     }
+    //     dp[x] = ans;
+    //     return dp[x];
+    // }
+    // tabulation method;
+    int solveTb(vector<int> &nums, int x){
+        vector<int> dp((x+1), INT_MAX);
+        dp[0] = 0;
+        // solve every amount figure from 1 to amount
+        for(int i=1; i<=x; i++)
+        {
+            for(int j=0; j<nums.size(); j++){
+                if(i-nums[j]>=0 && dp[i-nums[j]]!=INT_MAX)
+                    dp[i] = min(dp[i], 1+ dp[i-nums[j]]);
+            }
+        }
+        if(dp[x]==INT_MAX)
+            return -1;
+        else
+            return dp[x];
+    }
+public:
+    int coinChange(vector<int>& nums, int amount) {
+        // vector<int> dp((amount+1), -1);
+        // fill(dp.begin(), dp.end(), -1);
+        // int ans = solveDP(nums, dp, amount);
+        int ans = solveTb(nums, amount);
+        // if(ans==INT_MAX)
+        //     return -1;
+        // else
+        return ans;
+        
+    }
