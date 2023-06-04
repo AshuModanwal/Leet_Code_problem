@@ -1,0 +1,29 @@
+    // int getMax(int i, vector<int> &dp, vector<int> &nums){
+    //     if(i>=nums.size())
+    //         return 0;
+    // if(dp[i]!=-1)    
+    //     return dp[i];
+    // // start ham 0 ind se kar rahe hai so nums[0] ka paise lt me de rahe hai.
+    // int lt = nums[i] + getMax(i +2, dp, nums);
+    // // now 1 ind se start kar rahe hai so nums[0] ka paisa nei dege.
+    // int tr = getMax(i+1, dp, nums);
+    // // dp me dono tarah se loote gaye ghar ke max money jayega.
+    // dp[i] = max(lt, tr);
+    // return dp[i] ;
+        
+    // }
+public:
+    int rob(vector<int>& nums) {
+        if(nums.size()==1)
+            return nums[0];
+        vector<int> dp(nums.size());
+        fill(dp.begin(), dp.end(), -1);
+        //  starting me 0 index ka hi bhejege line 11 me 1 ind se start hai;
+        // return getMax(0, dp, nums);   
+        dp[0] = nums[0];
+        dp[1] = max(dp[0], nums[1]);
+        for(int i=2; i<nums.size(); i++){
+            dp[i] = max(dp[i-2] + nums[i], dp[i-1]);
+        }
+        return dp[nums.size()-1];
+    }
